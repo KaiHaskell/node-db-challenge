@@ -6,6 +6,12 @@ module.exports = {
   getTasksByProject
 };
 
+// function findProject(id) {
+//   return db("projects")
+//     .where({ id })
+//     .select();
+// }
+
 function findTasks(id) {
   return db("task")
     .where({ id })
@@ -13,11 +19,7 @@ function findTasks(id) {
 }
 
 function addTask(task) {
-  return db("task")
-    .insert(task)
-    .then(ids => {
-      return findTasks(ids[0].first());
-    });
+  return db("task").insert(task);
 }
 
 function getTasksByProject(id) {

@@ -52,8 +52,8 @@ router.post("/", (req, res) => {
 router.post("/:id/tasks", (req, res) => {
   const newTask = req.body;
   const id = req.params.id;
-  console.log(req.body, req.params);
-  PScheme.addTask("task")
+  console.log(newTask, id);
+  PScheme.addTask(newTask)
     .then(task => {
       res.status(201).json(task);
     })
