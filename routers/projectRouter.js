@@ -2,6 +2,8 @@ const router = require("express").Router();
 
 const db = require("../data/dbConfig");
 
+const PScheme = require("./project-schemes");
+
 //Get all projects
 router.get("/", (req, res) => {
   db("projects")
@@ -46,4 +48,35 @@ router.post("/", (req, res) => {
     });
 });
 
+//Adding a task to a project
+router.post("/:id/tasks", (req, res) => {
+  const newTask = req.body;
+  const id = req.params.id;
+  console.log(req.body, req.params);
+  PScheme.addTask("task")
+    .then(task => {
+      res.status(201).json(task);
+    })
+    .catch(err => {
+      console.log(err);
+      res
+        .status(400)
+        .json({ Error: `Unable to add ${newTask} with to project #${id}` });
+    });
+});
+
+//Get a task and the project it's designated to
+router.get("/:id/tasks", (req, res) => {
+  const id = req.params.id;
+  PScheme.getTasksByProject(id)
+    .then(task => {
+      res.status(200).json(task);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(400).json({
+        Error: `Unable to get the tasks belonging to project #${req.params.id}`
+      });
+    });
+});
 module.exports = router;

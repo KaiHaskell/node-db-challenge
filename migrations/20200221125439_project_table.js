@@ -36,6 +36,10 @@ exports.up = async function(knex) {
       .onDelete("RESTRICT");
     tbl.string("description", 256).notNullable();
     tbl.string("notes", 256);
+    tbl
+      .boolean("completed")
+      .defaultTo(false)
+      .notNullable();
   });
 
   await knex.schema.createTable("project_resources", tbl => {
