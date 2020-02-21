@@ -4,6 +4,7 @@
   "description": "hey man im just trying to take a test here",
   "main": "index.js",
   "scripts": {
+    "server": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

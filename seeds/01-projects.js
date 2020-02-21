@@ -16,7 +16,7 @@ exports.seed = function(knex) {
       id: 3,
       name: "Get a job",
       description: "I hate being broke 😔",
-      completed: true
+      completed: false
     }
   ]);
 };
