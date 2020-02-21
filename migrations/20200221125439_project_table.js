@@ -1,6 +1,7 @@
 exports.up = async function(knex) {
+  //project table
   await knex.schema.createTable("projects", tbl => {
-    tbl.increment();
+    tbl.increments();
     tbl
       .string("name", 64)
       .unique()
@@ -12,8 +13,9 @@ exports.up = async function(knex) {
       .defaultTo(false);
   });
 
+  //resources table
   await knex.schema.createTable("resources", tbl => {
-    tbl.increment();
+    tbl.increments();
     tbl
       .string("name", 64)
       .unique()
@@ -21,8 +23,9 @@ exports.up = async function(knex) {
     tbl.string("description", 256);
   });
 
+  //tasks table
   await knex.schema.createTable("task", tbl => {
-    tbl.increment();
+    tbl.increments();
     tbl
       .integer("project_id")
       .unsigned()
@@ -30,13 +33,13 @@ exports.up = async function(knex) {
       .references("id")
       .inTable("projects")
       .onUpdate("CASCADE")
-      .onDelete("CASCADE");
+      .onDelete("RESTRICT");
     tbl.string("description", 256).notNullable();
     tbl.string("notes", 256);
   });
 
   await knex.schema.createTable("project_resources", tbl => {
-    tbl.primary(["project_id", "resources_id"]);
+    tbl.increments();
     tbl
       .integer("project_id")
       .unsigned()
@@ -47,7 +50,7 @@ exports.up = async function(knex) {
       .onUpdate("CASCADE");
 
     tbl
-      .integer("resources_id")
+      .integer("resource_id")
       .unsigned()
       .notNullable()
       .references("id")
